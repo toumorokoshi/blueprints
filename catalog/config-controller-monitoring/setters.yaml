@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  # to-do: see if we can use some default service account?
+  # currently not true, due to cloud monitoring API not being enabled by default.
+  # on the ACP SA account.
+  gcp-service-account: gcp-service-account
+  # the project where the config-controller instance is deployed
+  project-id: project-id
+  # config controller instance name
+  config-controller-instance-name: config-controller-instance-name

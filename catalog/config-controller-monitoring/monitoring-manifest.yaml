@@ -1,0 +1,60 @@
+---
+# this ServiceMonitor monitors config connector instances
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: config-connector
+  namespace: config-controller-monitoring
+  labels:
+    component: config-controller
+spec:
+  endpoints:
+  - interval: 10s
+    port: metrics
+  namespaceSelector:
+    matchNames:
+    - cnrm-system
+  selector:
+    matchLabels:
+      cnrm.cloud.google.com/monitored: "true"
+      cnrm.cloud.google.com/system: "true"
+---
+# ServiceMonitor to monitor ConfigSync
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: configsync
+  namespace: config-controller-monitoring
+  labels:
+    component: config-controller
+spec:
+  selector:
+    matchLabels:
+      monitored: "true"
+  namespaceSelector:
+    matchNames:
+    # If you are using multi-repo mode, change
+    # config-management-system to config-management-monitoring
+    - config-management-system
+  endpoints:
+  - port: metrics
+    interval: 10s
+---
+# PodMonitor to monitor Policy Controller
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: policy-controller
+  namespace: config-controller-monitoring
+  labels:
+    component: config-controller
+spec:
+  selector:
+    matchLabels:
+      monitored: "true"
+  namespaceSelector:
+    matchNames:
+    - gatekeeper-system
+  podMetricsEndpoints:
+  - port: metrics
+    interval: 10s
