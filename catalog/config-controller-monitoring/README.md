@@ -6,7 +6,7 @@ sample description
 ## Usage
 
 ### Fetch the package
-`kpt pkg get REPO_URI[.git]/PKG_PATH[@VERSION] config-controller-monitoring`
+`https://github.com/toumorokoshi/blueprints.git/catalog/config-controller-monitoring@toum/config-controller-monitoring`
 Details: https://kpt.dev/reference/cli/pkg/get/
 
 ### View package content
