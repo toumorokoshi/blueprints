@@ -1,0 +1,178 @@
+{
+  "category": "CUSTOM",
+  "displayName": "Config Controller - Telemetry",
+  "mosaicLayout": {
+    "columns": 12,
+    "tiles": [
+      {
+        "height": 4,
+        "widget": {
+          "timeSeriesTable": {
+            "dataSets": [
+              {
+                "minAlignmentPeriod": "60s",
+                "tableDisplayOptions": {},
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "crossSeriesReducer": "REDUCE_NONE",
+                      "perSeriesAligner": "ALIGN_MEAN"
+                    },
+                    "filter": "metric.type=\"external.googleapis.com/prometheus/configconnector_applied_resources_total\" resource.type=\"k8s_container\""
+                  }
+                }
+              }
+            ]
+          },
+          "title": "Resource Details"
+        },
+        "width": 12,
+        "xPos": 0,
+        "yPos": 9
+      },
+      {
+        "height": 4,
+        "widget": {
+          "timeSeriesTable": {
+            "dataSets": [
+              {
+                "minAlignmentPeriod": "60s",
+                "tableDisplayOptions": {},
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "crossSeriesReducer": "REDUCE_MEAN",
+                      "groupByFields": [
+                        "metric.label.\"exported_namespace\"",
+                        "resource.label.\"cluster_name\""
+                      ],
+                      "perSeriesAligner": "ALIGN_MEAN"
+                    },
+                    "filter": "metric.type=\"external.googleapis.com/prometheus/configconnector_applied_resources_total\""
+                  }
+                }
+              }
+            ]
+          },
+          "title": "Failing Namespaces"
+        },
+        "width": 12,
+        "xPos": 0,
+        "yPos": 5
+      },
+      {
+        "height": 4,
+        "widget": {
+          "timeSeriesTable": {
+            "dataSets": [
+              {
+                "minAlignmentPeriod": "60s",
+                "tableDisplayOptions": {},
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "crossSeriesReducer": "REDUCE_NONE",
+                      "perSeriesAligner": "ALIGN_MEAN"
+                    },
+                    "filter": "metric.type=\"external.googleapis.com/prometheus/gkeconfig_monitor_errors\""
+                  }
+                }
+              }
+            ]
+          },
+          "title": "ConfigSync Errors"
+        },
+        "width": 6,
+        "xPos": 0,
+        "yPos": 19
+      },
+      {
+        "height": 3,
+        "widget": {
+          "text": {
+            "content": "This dashboard is a birds-eye view of the config controller clusters in your project.\n\nThe goal is to help you root cause the issues that may cause resources to not reconcile in your cluster: user error or otherwise. \n\nTo help root cause your issues, go down this dashboard top down: the panels are ordered in the order that one should investigate first, before moving on to the subsequent section.\n",
+            "format": "MARKDOWN"
+          },
+          "title": "Config Controller Telemetry - Alpha"
+        },
+        "width": 12,
+        "xPos": 0,
+        "yPos": 0
+      },
+      {
+        "height": 2,
+        "widget": {
+          "text": {
+            "content": "If all resources are working as intended above, or resources appear to be missing, examine the operational health of individual components below.",
+            "format": "MARKDOWN"
+          },
+          "title": "Component Operational Status"
+        },
+        "width": 12,
+        "xPos": 0,
+        "yPos": 17
+      },
+      {
+        "height": 4,
+        "widget": {
+          "logsPanel": {
+            "filter": "labels.\"k8s-pod/app\" = \"git-importer\"\nseverity=(WARNING OR ERROR OR CRITICAL OR ALERT OR EMERGENCY)\nseverity=(EMERGENCY OR ALERT OR CRITICAL OR ERROR)\n",
+            "resourceNames": [
+              "projects/427064233134"
+            ]
+          },
+          "title": "ConfigSync Logs with Error Severity"
+        },
+        "width": 6,
+        "xPos": 6,
+        "yPos": 19
+      },
+      {
+        "height": 4,
+        "widget": {
+          "logsPanel": {
+            "filter": "labels.k8s-pod/cnrm_cloud_google_com/component=\"cnrm-controller-manager\"\nseverity=(ERROR OR CRITICAL OR ALERT OR EMERGENCY)\n",
+            "resourceNames": [
+              "projects/427064233134"
+            ]
+          },
+          "title": "Config Connector Logs with Error Severity"
+        },
+        "width": 6,
+        "xPos": 6,
+        "yPos": 23
+      },
+      {
+        "height": 2,
+        "widget": {
+          "text": {
+            "content": "Config Connector is responsible for applying desired resource state to GCP services.",
+            "format": "MARKDOWN"
+          },
+          "title": "Config Connector Resource Status"
+        },
+        "width": 12,
+        "xPos": 0,
+        "yPos": 3
+      },
+      {
+        "height": 4,
+        "widget": {
+          "logsPanel": {
+            "filter": "jsonPayload.\"reconciler kind\"=\"SourceRepoRepository\"\nresource.labels.cluster_name=\"krmapihost-monitoring-poc\"",
+            "resourceNames": [
+              "projects/427064233134"
+            ]
+          },
+          "title": "Resource Logs"
+        },
+        "width": 12,
+        "xPos": 0,
+        "yPos": 13
+      }
+    ]
+  }
+}
