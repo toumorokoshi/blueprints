@@ -1,4 +1,3 @@
----
 # this ServiceMonitor monitors config connector instances
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -35,7 +34,7 @@ spec:
     matchNames:
     # If you are using multi-repo mode, change
     # config-management-system to config-management-monitoring
-    - config-management-system
+    - config-management-system # kpt-set: ${config-sync-mode}
   endpoints:
   - port: metrics
     interval: 10s
