@@ -1,6 +1,6 @@
 apiVersion: v1
 kind: ConfigMap
-metadata:
+metadata: # kpt-merge: /setters
   name: setters
 data:
   # to-do: see if we can use some default service account?
@@ -11,3 +11,7 @@ data:
   project-id: project-id
   # config controller instance name
   config-controller-instance-name: config-controller-instance-name
+  # config sync repo mode
+  # If you are using multi-repo mode, change
+  # config-management-system to config-management-monitoring
+  config-sync-mode: config-management-system

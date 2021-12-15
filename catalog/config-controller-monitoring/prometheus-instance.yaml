@@ -49,9 +49,9 @@ metadata:
     prometheus: config-controller
 spec:
   serviceAccountName: prometheus-config-controller
-  # specify the image to use the gcr.io internal version.
-  image: "us-docker.pkg.dev/config-controller-monitoring/prometheus/prometheus:v2.30.3"
-  version: "2.30.3"
+  # specify the gmp image
+  image: "gke.gcr.io/prometheus-engine/prometheus:v2.28.1-gmp.1-gke.1"
+  version: "2.28.1-gmp.1-gke.1"
   # could add 2 replicas for redundancy
   # replicas: 2
   serviceMonitorSelector:
@@ -62,21 +62,6 @@ spec:
     requests:
       # this may have to be increased depending on the number of metrics stored in the cluster.
       memory: 400Mi
-  # inject the stackdriver-prometheus sidecar, to pull the desired metrics.
-  containers:
-  - args:
-      - "--stackdriver.project-id=project-id"  # kpt-set: --stackdriver.project-id=${project-id}
-      - "--prometheus.wal-directory=/prometheus/wal"
-      - "--stackdriver.kubernetes.cluster-name=cluster-name-placeholder"   # kpt-set: --stackdriver.kubernetes.cluster-name=${config-controller-instance-name}
-    image: gcr.io/stackdriver-prometheus/stackdriver-prometheus-sidecar:0.8.0
-    imagePullPolicy: Always
-    name: sidecar
-    ports:
-    - containerPort: 9091
-      name: sidecar
-    volumeMounts:
-    - mountPath: /prometheus
-      name: prometheus-prometheus-config-controller-db
 ---
 # A prometheus service is exposed for debugging purposes
 # this can be accessed locally with port forwarding:
@@ -96,3 +81,52 @@ spec:
   selector:
     app: prometheus
     prometheus: config-controller
+---
+# Promethus UI
+# https://cloud.google.com/stackdriver/docs/managed-prometheus/query#promui-deploy
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: config-controller-monitoring
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      serviceAccountName: prometheus-config-controller
+      containers:
+      - name: frontend
+        image: "gke.gcr.io/prometheus-engine/frontend:v0.1.1-gke.0"
+        args:
+        - "--web.listen-address=:9090"
+        - "--query.project-id=project-id" # kpt-set: --query.project-id=${project-id}
+        ports:
+        - name: web
+          containerPort: 9090
+        readinessProbe:
+          httpGet:
+            path: /-/ready
+            port: web
+        livenessProbe:
+          httpGet:
+            path: /-/healthy
+            port: web
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: config-controller-monitoring
+spec:
+  clusterIP: None
+  selector:
+    app: frontend
+  ports:
+  - name: web
+    port: 9090
