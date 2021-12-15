@@ -1,0 +1,35 @@
+# Promethus UI
+# https://cloud.google.com/stackdriver/docs/managed-prometheus/query#promui-deploy
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: config-controller-monitoring
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      serviceAccountName: prometheus-config-controller
+      containers:
+      - name: frontend
+        image: "gke.gcr.io/prometheus-engine/frontend:v0.1.1-gke.0"
+        args:
+        - "--web.listen-address=:9090"
+        - "--query.project-id=project-id" # kpt-set: --query.project-id=${project-id}
+        ports:
+        - name: web
+          containerPort: 9090
+        readinessProbe:
+          httpGet:
+            path: /-/ready
+            port: web
+        livenessProbe:
+          httpGet:
+            path: /-/healthy
+            port: web
