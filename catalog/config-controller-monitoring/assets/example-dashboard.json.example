@@ -121,7 +121,7 @@
           "logsPanel": {
             "filter": "labels.\"k8s-pod/app\" = \"git-importer\"\nseverity=(WARNING OR ERROR OR CRITICAL OR ALERT OR EMERGENCY)\nseverity=(EMERGENCY OR ALERT OR CRITICAL OR ERROR)\n",
             "resourceNames": [
-              "projects/208877121982"
+              "projects/427064233134"
             ]
           },
           "title": "ConfigSync Logs with Error Severity"
@@ -136,7 +136,7 @@
           "logsPanel": {
             "filter": "labels.k8s-pod/cnrm_cloud_google_com/component=\"cnrm-controller-manager\"\nseverity=(ERROR OR CRITICAL OR ALERT OR EMERGENCY)\n",
             "resourceNames": [
-              "projects/208877121982"
+              "projects/427064233134"
             ]
           },
           "title": "Config Connector Logs with Error Severity"
@@ -164,7 +164,7 @@
           "logsPanel": {
             "filter": "jsonPayload.\"reconciler kind\"=\"SourceRepoRepository\"\nresource.labels.cluster_name=\"krmapihost-monitoring-poc\"",
             "resourceNames": [
-              "projects/208877121982"
+              "projects/427064233134"
             ]
           },
           "title": "Resource Logs"
