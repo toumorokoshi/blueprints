@@ -19,7 +19,7 @@
                       "crossSeriesReducer": "REDUCE_NONE",
                       "perSeriesAligner": "ALIGN_MEAN"
                     },
-                    "filter": "metric.type=\"external.googleapis.com/prometheus/configconnector_applied_resources_total\" resource.type=\"k8s_container\""
+                    "filter": "metric.type=\"prometheus.googleapis.com/configconnector_applied_resources_total/gauge\""
                   }
                 }
               }
@@ -50,7 +50,7 @@
                       ],
                       "perSeriesAligner": "ALIGN_MEAN"
                     },
-                    "filter": "metric.type=\"external.googleapis.com/prometheus/configconnector_applied_resources_total\""
+                    "filter": "metric.type=\"prometheus.googleapis.com/configconnector_applied_resources_total/gauge\""
                   }
                 }
               }
@@ -77,7 +77,7 @@
                       "crossSeriesReducer": "REDUCE_NONE",
                       "perSeriesAligner": "ALIGN_MEAN"
                     },
-                    "filter": "metric.type=\"external.googleapis.com/prometheus/gkeconfig_monitor_errors\""
+                    "filter": "metric.type=\"prometheus.googleapis.com/config_sync_reconciler_errors/gauge\""
                   }
                 }
               }
