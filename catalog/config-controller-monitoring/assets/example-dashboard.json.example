@@ -19,7 +19,7 @@
                       "crossSeriesReducer": "REDUCE_NONE",
                       "perSeriesAligner": "ALIGN_MEAN"
                     },
-                    "filter": "metric.type=\"external.googleapis.com/prometheus/configconnector_applied_resources_total\" resource.type=\"k8s_container\""
+                    "filter": "metric.type=\"prometheus.googleapis.com/configconnector_applied_resources_total/gauge\""
                   }
                 }
               }
@@ -50,7 +50,7 @@
                       ],
                       "perSeriesAligner": "ALIGN_MEAN"
                     },
-                    "filter": "metric.type=\"external.googleapis.com/prometheus/configconnector_applied_resources_total\""
+                    "filter": "metric.type=\"prometheus.googleapis.com/configconnector_applied_resources_total/gauge\""
                   }
                 }
               }
@@ -77,7 +77,7 @@
                       "crossSeriesReducer": "REDUCE_NONE",
                       "perSeriesAligner": "ALIGN_MEAN"
                     },
-                    "filter": "metric.type=\"external.googleapis.com/prometheus/gkeconfig_monitor_errors\""
+                    "filter": "metric.type=\"prometheus.googleapis.com/config_sync_reconciler_errors/gauge\""
                   }
                 }
               }
@@ -121,7 +121,7 @@
           "logsPanel": {
             "filter": "labels.\"k8s-pod/app\" = \"git-importer\"\nseverity=(WARNING OR ERROR OR CRITICAL OR ALERT OR EMERGENCY)\nseverity=(EMERGENCY OR ALERT OR CRITICAL OR ERROR)\n",
             "resourceNames": [
-              "projects/427064233134"
+              "projects/208877121982"
             ]
           },
           "title": "ConfigSync Logs with Error Severity"
@@ -136,7 +136,7 @@
           "logsPanel": {
             "filter": "labels.k8s-pod/cnrm_cloud_google_com/component=\"cnrm-controller-manager\"\nseverity=(ERROR OR CRITICAL OR ALERT OR EMERGENCY)\n",
             "resourceNames": [
-              "projects/427064233134"
+              "projects/208877121982"
             ]
           },
           "title": "Config Connector Logs with Error Severity"
@@ -164,7 +164,7 @@
           "logsPanel": {
             "filter": "jsonPayload.\"reconciler kind\"=\"SourceRepoRepository\"\nresource.labels.cluster_name=\"krmapihost-monitoring-poc\"",
             "resourceNames": [
-              "projects/427064233134"
+              "projects/208877121982"
             ]
           },
           "title": "Resource Logs"
